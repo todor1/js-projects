@@ -130,32 +130,78 @@
 // console.log(toArray(1, 2, 3, 4));
 
 //// Destructuring
-const person = {
-  name: "Todor",
-  age: 25,
-  greet() {
-    console.log("Hi, I am " + this.name);
-  },
+// const person = {
+//   name: "Todor",
+//   age: 25,
+//   greet() {
+//     console.log("Hi, I am " + this.name);
+//   },
+// };
+
+// // const printName = (personObj) => {
+// //   console.log(personObj.name);
+// // };
+// // const printName = ({ name }) => {
+// //   console.log(name);
+// // };
+
+// // const printName = ({ name, age }) => {
+// //   console.log(name, age);
+// // };
+
+// // printName(person);
+
+// // pulled out by name from the object
+// const { name, age } = person;
+// console.log(name, age);
+
+// // pulled out by position/index from the array
+// const hobbies = ["Sports", "Cooking"];
+// const [hobby1, hobby2] = hobbies;
+// console.log(hobby1, hobby2);
+
+//// Async code & Promises
+
+// const fetchData = (callback) => {
+//   setTimeout(() => {
+//     callback("Done!");
+//   }, 1500);
+// };
+
+// // callback function - should execute in the future, should call back later, when the task is done(2 seconds, in this case)
+// setTimeout(() => {
+//   console.log("Timer is done!");
+//   fetchData((text) => {
+//     console.log(text);
+//   });
+// }, (timeout = 2000));
+
+// console.log("Hello from the global code!");
+// console.log("Hi synchronous!");
+
+const fetchData = () => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Done!");
+    }, 1500);
+  });
+  // synchronous code, returned immediately after the promise gets created,
+  // before the code in the promise is run, when we actually call that function and the timer copletes
+  //
+  return promise;
 };
 
-// const printName = (personObj) => {
-//   console.log(personObj.name);
-// };
-// const printName = ({ name }) => {
-//   console.log(name);
-// };
+setTimeout(() => {
+  console.log("Timer is done!");
+  fetchData()
+    .then((text) => {
+      console.log(text);
+      return fetchData();
+    })
+    .then((text2) => {
+      console.log(text2);
+    });
+}, 2000);
 
-// const printName = ({ name, age }) => {
-//   console.log(name, age);
-// };
-
-// printName(person);
-
-// pulled out by name from the object
-const { name, age } = person;
-console.log(name, age);
-
-// pulled out by position/index from the array
-const hobbies = ["Sports", "Cooking"];
-const [hobby1, hobby2] = hobbies;
-console.log(hobby1, hobby2);
+console.log("Hello from the global code!");
+console.log("Hi synchronous!");
